@@ -49,6 +49,7 @@ test:
 #
 staging:
   <<: *default
+  host: stagingdb.cvbhxefpvzzw.ap-south-1.rds.amazonaws.com
   database: crafting_rails_samples_staging
   username: root
   password: craftingrails
