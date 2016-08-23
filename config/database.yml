@@ -47,6 +47,12 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+staging:
+  <<: *default
+  database: crafting_rails_samples_staging
+  username: root
+  password: craftingrails
+
 production:
   <<: *default
   database: crafting_rails_samples_production
