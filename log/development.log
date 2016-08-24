@@ -58,3 +58,140 @@ Mysql2::Error (Can't connect to local MySQL server through socket '/tmp/mysql.so
   Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/actionpack-4.1.2/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
   Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/actionpack-4.1.2/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
   Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/actionpack-4.1.2/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (23.6ms)
+  [1m[36m (22.9ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (15.9ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+
+
+Started GET "/" for 127.0.0.1 at 2016-08-24 15:35:13 +0530
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/railties-4.1.2/lib/rails/templates/rails/welcome/index.html.erb (2.5ms)
+Completed 200 OK in 20ms (Views: 10.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2016-08-24 15:38:25 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+	bin/rake db:migrate RAILS_ENV=development
+
+):
+  activerecord (4.1.2) lib/active_record/migration.rb:389:in `check_pending!'
+  activerecord (4.1.2) lib/active_record/migration.rb:377:in `call'
+  actionpack (4.1.2) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.2) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.2) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.2) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.2) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.2) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.2) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.2) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.2) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.2) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.2) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.2) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.5) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.5) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.2) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.5) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.2) lib/rails/engine.rb:514:in `call'
+  railties (4.1.2) lib/rails/application.rb:144:in `call'
+  rack (1.5.5) lib/rack/lock.rb:17:in `call'
+  rack (1.5.5) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.5) lib/rack/handler/webrick.rb:60:in `service'
+  /Users/shubhangipandya/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  /Users/shubhangipandya/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  /Users/shubhangipandya/.rvm/rubies/ruby-2.1.2/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/actionpack-4.1.2/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.5ms)
+  Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/actionpack-4.1.2/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.0ms)
+  Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/actionpack-4.1.2/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/shubhangipandya/.rvm/gems/ruby-2.1.2@global/gems/actionpack-4.1.2/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (21.6ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to CreateAdminBooks (20160824100701)
+  [1m[35m (21.1ms)[0m  CREATE TABLE `admin_books` (`id` int(11) auto_increment PRIMARY KEY, `title` varchar(255), `author` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (3.0ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20160824100701')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT `schema_migrations`.* FROM `schema_migrations`
+
+
+Started GET "/" for 127.0.0.1 at 2016-08-24 15:39:09 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by Admin::BooksController#index as HTML
+  [1m[35mAdmin::Book Load (0.4ms)[0m  SELECT `admin_books`.* FROM `admin_books`
+  Rendered admin/books/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 248ms (Views: 237.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/assets/admin/books.css?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/assets/admin/books.js?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2016-08-24 15:39:10 +0530
+
+
+Started GET "/admin/books/new" for 127.0.0.1 at 2016-08-24 15:39:12 +0530
+Processing by Admin::BooksController#new as HTML
+  Rendered admin/books/_form.html.erb (30.0ms)
+  Rendered admin/books/new.html.erb within layouts/application (37.3ms)
+Completed 200 OK in 75ms (Views: 69.7ms | ActiveRecord: 2.5ms)
+
+
+Started POST "/admin/books" for 127.0.0.1 at 2016-08-24 15:39:25 +0530
+Processing by Admin::BooksController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"PEtu/2zdQGKxzrTjLHO6VIhK6qdGAASUMGrPCiGcGRU=", "admin_book"=>{"title"=>"hello1", "author"=>"test1"}, "commit"=>"Create Book"}
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO `admin_books` (`author`, `created_at`, `title`, `updated_at`) VALUES ('test1', '2016-08-24 10:09:25', 'hello1', '2016-08-24 10:09:25')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/admin/books/1
+Completed 302 Found in 6ms (ActiveRecord: 1.4ms)
+
+
+Started GET "/admin/books/1" for 127.0.0.1 at 2016-08-24 15:39:25 +0530
+Processing by Admin::BooksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mAdmin::Book Load (1.8ms)[0m  SELECT  `admin_books`.* FROM `admin_books`  WHERE `admin_books`.`id` = 1 LIMIT 1
+  Rendered admin/books/show.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 38ms (Views: 34.2ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/assets/admin/books.css?body=1" for 127.0.0.1 at 2016-08-24 15:39:26 +0530
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2016-08-24 15:39:26 +0530
+
+
+Started GET "/assets/admin/books.js?body=1" for 127.0.0.1 at 2016-08-24 15:39:26 +0530
+
+
+Started GET "/admin/books" for 127.0.0.1 at 2016-08-24 15:39:28 +0530
+Processing by Admin::BooksController#index as HTML
+  [1m[36mAdmin::Book Load (0.4ms)[0m  [1mSELECT `admin_books`.* FROM `admin_books`[0m
+  Rendered admin/books/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 82ms (Views: 81.2ms | ActiveRecord: 0.4ms)
