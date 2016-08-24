@@ -56,6 +56,7 @@ staging:
 
 production:
   <<: *default
+  host: stagingdb.cvbhxefpvzzw.ap-south-1.rds.amazonaws.com
   database: crafting_rails_samples_production
-  username: crafting_rails_samples
-  password: <%= ENV['CRAFTING_RAILS_SAMPLES_DATABASE_PASSWORD'] %>
+  username: root
+  password: craftingrails
