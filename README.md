@@ -1,13 +1,13 @@
 # passenger_nginx_rails_sample_app
 samples app made to demonstrate deployment of Rail 4 app with Phusion Passenger and Nginx
 
-## Technology stack -
+## Technology stack
 - Ruby 2.1.2, Rails 4.1, RVM, Phusion Passenger, Nginx, Ubuntu 14.04, MySql, MongoDB, GitHub, AWS(EC2, RDS, ElasticIP)
 
-## Launch EC2 instance -
+## Launch EC2 instance
 - Reference - https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/aws/nginx/oss/launch_server.html
 
-## Map Elastic IP with EC2 instance -
+## Map Elastic IP with EC2 instance
 - Go to AWS console and click on "Elastic IPs" in left panel in EC2 section 
 - Click on "Allocate New Address" at the top of the page
 - Click on "Yes, Allocate"
@@ -18,7 +18,7 @@ samples app made to demonstrate deployment of Rail 4 app with Phusion Passenger 
 - Type Instance-Id or Name of the instance in Instance textbox
 - Select relevant Instance from dropdown
 
-## Create alias to SSH EC2 instance in your local machine -
+## Create alias to SSH EC2 instance in your local machine
 
 - Open bash_profile file 
   - $ vi ~/.bash_profile 
@@ -32,7 +32,7 @@ samples app made to demonstrate deployment of Rail 4 app with Phusion Passenger 
 - Try Alias 
   - $ ssh-app-server1 
 
-## Prepare system -
+## Prepare system
 
 - Connect to server 
   - $ ssh-app-server1 
@@ -40,7 +40,7 @@ samples app made to demonstrate deployment of Rail 4 app with Phusion Passenger 
   - $ sudo apt-get update
   - $ sudo apt-get install -y curl gnupg build-essential
 
-## Install RVM -
+## Install RVM
 
 - Rub below commands 
   - $ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
