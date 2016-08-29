@@ -111,6 +111,10 @@ Congratulations! Your server is now ready to deploy Rails application.
   - $ git config --global user.email "youremail@domain.com"
 - Verify configurations
   - $ git config --list
+- Generate SSH key to access your GitHub account from the server 
+  - Refer - https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
+- Add SSH key to your GitHub account
+  - Refer - https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
 
 ## Create a new user for your app
 
