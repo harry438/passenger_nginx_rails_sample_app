@@ -115,6 +115,9 @@ Congratulations! Your server is now ready to deploy Rails application.
   - Refer - https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
 - Add SSH key to your GitHub account
   - Refer - https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
+- Make SSH key accessible to username created as per above
+  - $ sudo sh -c "cat $HOME/.ssh/id_rsa >> ~username/.ssh/id_rsa"
+  - $ sudo sh -c "cat $HOME/.ssh/id_rsa.pub >> ~username/.ssh/id_rsa.pub”
 
 ## Create a new user for your app
 
