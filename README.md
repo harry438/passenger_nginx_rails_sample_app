@@ -102,6 +102,19 @@ samples app made to demonstrate deployment of Rail 4 app with Phusion Passenger 
 
 Congratulations! Your server is now ready to deploy Rails application.
 
+## Create a new user for your app
+
+- Replace “Ubuntu” adminuser with new user with admin privileges 
+- Run below command to create a new user
+  - $ sudo adduser username
+- Make SSH key of ubuntu adminuser accessible to username
+  - $ sudo mkdir -p ~username/.ssh
+  - $ touch $HOME/.ssh/authorized_keys
+  - $ sudo sh -c "cat $HOME/.ssh/authorized_keys >> ~username/.ssh/authorized_keys"
+  - $ sudo chown -R username: ~username/.ssh
+  - $ sudo chmod 700 ~username/.ssh
+  - $ sudo sh -c "chmod 600 ~username/.ssh/*"
+  
 ## Install and Setup Git
 
 - Run below command to install 
@@ -118,19 +131,17 @@ Congratulations! Your server is now ready to deploy Rails application.
 - Make SSH key accessible to username created as per above
   - $ sudo sh -c "cat $HOME/.ssh/id_rsa >> ~username/.ssh/id_rsa"
   - $ sudo sh -c "cat $HOME/.ssh/id_rsa.pub >> ~username/.ssh/id_rsa.pub”
-
-## Create a new user for your app
-
-- Replace “Ubuntu” adminuser with new user with admin privileges 
-- Run below command to create a new user
-  - $ sudo adduser username
-- Make SSH key of ubuntu adminuser accessible to username
-  - $ sudo mkdir -p ~username/.ssh
-  - $ touch $HOME/.ssh/authorized_keys
-  - $ sudo sh -c "cat $HOME/.ssh/authorized_keys >> ~username/.ssh/authorized_keys"
-  - $ sudo chown -R username: ~username/.ssh
-  - $ sudo chmod 700 ~username/.ssh
-  - $ sudo sh -c "chmod 600 ~username/.ssh/*"
- 
+- Test SSH connection with GitHub
+  - Refer - https://help.github.com/articles/testing-your-ssh-connection/
   
+## Setup code
+
+- Prepare directory structure 
+  - $ sudo mkdir -p /var/www/yourappname
+  - $ sudo chown username: /var/www/yourappname (make it accessible to username created as per above)
+- Go to directory
+  - $ cd /var/www/yourappname
+- Clone code of your rails app. Alternatively you can use my sample app (https://github.com/rutisyrz/passenger_nginx_rails_sample_app)
+  - $ git clone git://github.com/username/yourappname.git code
+- Note: Run command “sudo chmod 777 /var/www/yourappname/” incase you get “fatal: could not create work tree dir 'code'.: Permission denied” error while cloning repository.
 
