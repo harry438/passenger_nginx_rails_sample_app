@@ -1,8 +1,8 @@
 # passenger_nginx_rails_sample_app
-samples app made to demonstrate deployment of Rail 4 app with Phusion Passenger and Nginx
+Samples app to demonstrate deployment of Rail 4 app on AWS with Phusion Passenger and Nginx
 
 ## Technology stack
-- Ruby 2.1.2, Rails 4.1, RVM, Phusion Passenger, Nginx, Ubuntu 14.04, MySql, GitHub, AWS(EC2, RDS, ElasticIP, AMI)
+- AWS(EC2, RDS, ElasticIP, AMI), Ruby 2.1.2, Rails 4.1, RVM, Phusion Passenger, Nginx, Ubuntu 14.04, MySql, GitHub
 
 ## Configure Staging environment in your application
 - Update database.yml
