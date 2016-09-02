@@ -6,10 +6,9 @@ Samples app to demonstrate deployment of Rail 4 app on AWS with Phusion Passenge
 
 ## Configure **Staging** environment in your application
 - Update *database.yml*
-  - Add section “staging” 
+  - Add section **staging**
   - We’ll update it with valid details later in this tutorial
-- Add new environment file and copy+paste content of “*/environments/production.rb*” file for now
-  - /config/environments/staging.rb
+- Add new environment file */config/environments/staging.rb* and copy+paste content of “*/environments/production.rb*” file for now
 - Commit and push changes in git repository
 
 ## Launch EC2 instance
@@ -28,7 +27,7 @@ Samples app to demonstrate deployment of Rail 4 app on AWS with Phusion Passenge
 
 ## Create alias to SSH EC2 instance in your local machine
 
-- Open bash_profile file 
+- Open *bash_profile* file 
 ```shell
 $ vi ~/.bash_profile 
 ```
@@ -36,7 +35,7 @@ $ vi ~/.bash_profile
 ```shell
 $ alias ssh-app-server1="ssh -i ~/.ssh/key-pair.pem ubuntu@1.1.1.1" # Replace with your server ip / Elastic IP / public DNS
 ```
-- Note: Ubuntu creates a default user “ubuntu” & 
+- **Note:** Ubuntu creates a default user “ubuntu” & 
 - Save 
 ```shell
 $ :wq
@@ -55,7 +54,7 @@ $ ssh-app-server1
 - Click on “*Get started now*”
 - Select engine “*MySQL*”
 - Select “*Dev/Test*” option
-  - Note: For testing / learning purpose, select this option as it launches RDS instance with  Single availability zone. 
+  - **Note:** For testing / learning purpose, select this option as it launches RDS instance with  Single availability zone.
   - For production environment, prefer Multi-AZ (Availability Zone) option
 
 - Select DB instance class as **db.t2.micro**
@@ -65,29 +64,29 @@ $ ssh-app-server1
   - DB Instance Identifier, Username, Password
 - Click on “*Next Step*”
 
-- Select “VPC Security Group(s)” as “default” / “launch-wizard-1”
-- Click on “Launch”
+- Select “*VPC Security Group(s)*” as **default** / **launch-wizard-1**
+- Click on “*Launch*”
 
-- Click on “View DB Instance”
+- Click on “**View DB Instance**”
 
 - Modify security group
   - Select the RDS Instance
   - Click on details icon 
-  - Click on link of “Security Groups” value as selected in configuration wizard
+  - Click on link of “*Security Groups*” value as selected in configuration wizard
 
 - Add new Rule
   - Select security group
-  - Click on tab “Inbound”
-  - Click on “Edit”
+  - Click on tab **Inbound**
+  - Click on “*Edit*”
   - A popup opens 
-    - Click on “Add Rule”
-    - Select option “MYSQL/Aurora” from Type dropdown
-    - Select option “Anywhere” from Source dropdown
-      - Note: It’s not advisable to allow Source as Anywhere for Production environment.
+    - Click on “*Add Rule*”
+    - Select option **MYSQL/Aurora** from Type dropdown
+    - Select option “*Anywhere*” from Source dropdown
+      - **Note:** It’s not advisable to allow Source as Anywhere for Production environment.
     - Click on “Save”
 
-## Update database.yml (For Staging)
-- Copy “Endpoint” and add it as a host 
+## Update *database.yml* (For Staging)
+- Copy “*Endpoint*” and add it as a host 
 - Update root user credentials (username & password) as mentioned while configuring instance
 
 ## Prepare system
@@ -110,9 +109,9 @@ $ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804B
 $ curl -sSL https://get.rvm.io | sudo bash -s stable
 $ sudo usermod -a -G rvm `whoami`
 ```
-  - Note: path where RVM gets installed - /usr/local/rvm/ 
+  - **Note:** path where RVM gets installed - */usr/local/rvm/*
 
-- set rvmsudo_secure_path=1
+- set *rvmsudo_secure_path=1*
 ```shell
 $ if sudo grep -q secure_path /etc/sudoers; then sudo sh -c "echo export rvmsudo_secure_path=1 >> /etc/profile.d/rvm_secure_path.sh" && echo Environment variable installed; fi
 ```
@@ -328,21 +327,23 @@ $ bundle exec rake assets:precompile RAILS_ENV=staging
   ```
 - Save file
 - Restart nginx. Run command
-  - $ sudo service nginx restart
-
+```shell
+$ sudo service nginx restart
+```
 ## See your app running 
 
-- http://elastic ipORec2 public dns
+- http://*elastic ip* OR *ec2 public dns*
 - Or run command 
-  - $ curl http://elastic ipORec2 public dns
-
+```shell
+$ curl http://elastic ipORec2 public dns
+```
 ## AWS AMI
 
 - Create Image of EC2 instance to fast-track the server config process next time when you are in need of more similar app servers
-- Go to EC2 dashboard, select instance
-- Click on “Action”
-- Select option “Image”
-  - Select option “Create Image”
+- Go to **EC2 dashboard**, select instance
+- Click on “*Action*”
+- Select option “*Image*”
+  - Select option “*Create Image*”
 
 ## References
 
