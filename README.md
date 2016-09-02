@@ -303,15 +303,19 @@ $ bundle exec rake assets:precompile RAILS_ENV=staging
 ## Configure Nginx and Passenger
 
 - Run command 
-  - $ passenger-config about ruby-command
-- Copy path after “Command:” in result printed and paste it somewhere in text file. We’ll use it later in this tutorial
+```shell
+$ passenger-config about ruby-command
+```
+- Copy path after “*Command:*” in result printed and paste it somewhere in text file. We’ll use it later in this tutorial
 
-- Go back to admin account (ubuntu) user by running a command “exit”
+- Go back to admin account (ubuntu) user by running a command **exit**
 
 - Create an Nginx configuration file and setup a virtual host entry that points to your app
-  -  $ sudo vi /etc/nginx/sites-enabled/yourappname.conf
+```shell
+$ sudo vi /etc/nginx/sites-enabled/yourappname.conf
+```
 - Copy + Paste below content (with proper valid formatting)
-	```ruby
+```ruby
   server {
     listen 80;
     server_name  <elastic ip / ec2 public dns>;
@@ -324,7 +328,7 @@ $ bundle exec rake assets:precompile RAILS_ENV=staging
     rails_env staging;  # Add this line to run app in staging env.
     passenger_ruby /ruby-path; # Replace with path copied from result as mentioned above
   }
-  ```
+```
 - Save file
 - Restart nginx. Run command
 ```shell
