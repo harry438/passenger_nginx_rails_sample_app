@@ -2,59 +2,68 @@
 Samples app to demonstrate deployment of Rail 4 app on AWS with Phusion Passenger and Nginx
 
 ## Technology stack
-- AWS(EC2, RDS, ElasticIP, AMI), Ruby 2.1.2, Rails 4.1, RVM, Phusion Passenger, Nginx, Ubuntu 14.04, MySql, GitHub
+- AWS(EC2, RDS, ElasticIP, AMI), Ruby 2.1.2, Rails 4.1, RVM, Phusion Passenger, Nginx, Ubuntu 14.04, MySQL, GitHub
 
-## Configure Staging environment in your application
-- Update database.yml
+## Configure **Staging** environment in your application
+- Update *database.yml*
   - Add section “staging” 
   - We’ll update it with valid details later in this tutorial
-- Add new environment file and copy+paste content of “/environments/production.rb” file for now
+- Add new environment file and copy+paste content of “*/environments/production.rb*” file for now
   - /config/environments/staging.rb
 - Commit and push changes in git repository
 
 ## Launch EC2 instance
-- Reference - https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/aws/nginx/oss/launch_server.html
+- [Click here](https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/aws/nginx/oss/launch_server.html)
 
 ## Map Elastic IP with EC2 instance
-- Go to AWS console and click on "Elastic IPs" in left panel in EC2 section 
-- Click on "Allocate New Address" at the top of the page
-- Click on "Yes, Allocate"
+- Go to AWS console and click on **Elastic IPs** in left panel in EC2 section 
+- Click on "*Allocate New Address*" at the top of the page
+- Click on "*Yes, Allocate*"
 
-- Select newly issued Elastic IP and click on "Actions"
-- Select option "Associate Address"
+- Select newly issued Elastic IP and click on "*Actions*"
+- Select option "*Associate Address*"
 
-- Type Instance-Id or Name of the instance in Instance textbox
+- Type **Instance-Id** or **Name of the instance** in Instance textbox
 - Select relevant Instance from dropdown
 
 ## Create alias to SSH EC2 instance in your local machine
 
 - Open bash_profile file 
-  - $ vi ~/.bash_profile 
+```shell
+$ vi ~/.bash_profile 
+```
 - Add below line in bash_profile file
-  - $ alias ssh-app-server1="ssh -i ~/.ssh/key-pair.pem ubuntu@1.1.1.1" # Replace with your server ip / Elastic IP / public DNS
+```shell
+$ alias ssh-app-server1="ssh -i ~/.ssh/key-pair.pem ubuntu@1.1.1.1" # Replace with your server ip / Elastic IP / public DNS
+```
 - Note: Ubuntu creates a default user “ubuntu” & 
 - Save 
-  - $ :wq
+```shell
+$ :wq
+```
 - Refresh file 
-  - $ source ~/.bash_profile 
+```shell
+$ source ~/.bash_profile 
+```
 - Try Alias 
-  - $ ssh-app-server1 
-
+```shell
+$ ssh-app-server1 
+```
 ## Launch AWS RDS instance for MySQL database
 
-- Go to AWS RDS section 
-- Click on “Get started now”
-- Select engine “MySQL”
-- Select “Dev/Test” option
+- Go to AWS **RDS** section 
+- Click on “*Get started now*”
+- Select engine “*MySQL*”
+- Select “*Dev/Test*” option
   - Note: For testing / learning purpose, select this option as it launches RDS instance with  Single availability zone. 
   - For production environment, prefer Multi-AZ (Availability Zone) option
 
-- Select DB instance class as “db.t2.micro”
-- Select Multi-AZ Deployment as “No”
+- Select DB instance class as **db.t2.micro**
+- Select Multi-AZ Deployment as **No**
 
-- Give valid inputs under “Setting” section for 
+- Give valid inputs under “*Setting*” section for 
   - DB Instance Identifier, Username, Password
-- Click on “Next Step”
+- Click on “*Next Step*”
 
 - Select “VPC Security Group(s)” as “default” / “launch-wizard-1”
 - Click on “Launch”
@@ -84,150 +93,214 @@ Samples app to demonstrate deployment of Rail 4 app on AWS with Phusion Passenge
 ## Prepare system
 
 - Connect to server 
-  - $ ssh-app-server1 
+```shell
+$ ssh-app-server1 
+```
 - Update system
-  - $ sudo apt-get update
-  - $ sudo apt-get install -y curl gnupg build-essential
+```shell
+$ sudo apt-get update
+$ sudo apt-get install -y curl gnupg build-essential
+```
 
 ## Install RVM
 
 - Rub below commands 
-  - $ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-  - $ curl -sSL https://get.rvm.io | sudo bash -s stable
-  - $ sudo usermod -a -G rvm `whoami`
-
+```shell
+$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+$ curl -sSL https://get.rvm.io | sudo bash -s stable
+$ sudo usermod -a -G rvm `whoami`
+```
   - Note: path where RVM gets installed - /usr/local/rvm/ 
 
 - set rvmsudo_secure_path=1
-  - $ if sudo grep -q secure_path /etc/sudoers; then sudo sh -c "echo export rvmsudo_secure_path=1 >> /etc/profile.d/rvm_secure_path.sh" && echo Environment variable installed; fi
+```shell
+$ if sudo grep -q secure_path /etc/sudoers; then sudo sh -c "echo export rvmsudo_secure_path=1 >> /etc/profile.d/rvm_secure_path.sh" && echo Environment variable installed; fi
+```
 - Re-login to server to activate RVM, else RVM does not work.
 
 ## Install Ruby 
 - We are going to install and use version 2.1.2. You can choose version you want to install
-  - $ rvm install ruby 2.1.2
-  - $ rvm --default use ruby 2.1.2 (set it as a default ruby version)
-
+```shell
+$ rvm install ruby 2.1.2
+$ rvm --default use ruby 2.1.2 (set it as a default ruby version)
+```
 ## Install Bundler
-- gem install bundler --no-rdoc --no-ri
-
+```ruby
+$ gem install bundler --no-rdoc --no-ri
+```
 ## Install Node.js
 - Node.js is must for Rails apps
 - Run below commands to install 
-  - $ sudo apt-get install -y nodejs &&
-  - $ sudo ln -sf /usr/bin/nodejs /usr/local/bin/node
+```shell
+$ sudo apt-get install -y nodejs &&
+$ sudo ln -sf /usr/bin/nodejs /usr/local/bin/node
+```
 - Verify installation by checking version. Run below command 
-  - $ node -v
-
+```shell
+$ node -v
+```
 ## Install Passenger + Nginx 
 
 - Install Phusion Passenger’s PGP key and add HTTPS support for APT
-  - $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
-  - $ sudo apt-get install -y apt-transport-https ca-certificates
-  - $ sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main > /etc/apt/sources.list.d/passenger.list'
-  - $ sudo apt-get update
-  
+```shell
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+$ sudo apt-get install -y apt-transport-https ca-certificates
+$ sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main > /etc/apt/sources.list.d/passenger.list'
+$ sudo apt-get update
+```  
 - Install Passenger + Nginx
-  - $ sudo apt-get install -y nginx-extras passenger
+```shell
+$ sudo apt-get install -y nginx-extras passenger
+```
 - Enable Passenger Nginx module and Restart Nginx
-  - Edit /etc/nginx/nginx.conf 
-    - $ sudo vi /etc/nginx/nginx.conf 
-  - Uncomment line “ # include /etc/nginx/passenger.conf; ” by removing “#” and Save file
-    - include /etc/nginx/passenger.conf;
-
+  - Edit */etc/nginx/nginx.conf*
+```shell
+$ sudo vi /etc/nginx/nginx.conf 
+```
+  - Uncomment line “*# include /etc/nginx/passenger.conf;*” by removing “#” and **Save** file
+```shell
+include /etc/nginx/passenger.conf;
+```
 - Restart Nginx
-  - $ sudo service nginx restart
+```shell
+$ sudo service nginx restart
+```
 - Validate installation
-  - $ sudo /usr/bin/passenger-config validate-install
-
+```shell
+$ sudo /usr/bin/passenger-config validate-install
+```
 - Finally, check whether Nginx has started the Passenger core processes
-  - $ sudo /usr/sbin/passenger-memory-stats
-
-- Note: You should see both Nginx processing & Passenger processes. Please refer to the passenger troubleshooting guide (https://www.phusionpassenger.com/library/admin/nginx/troubleshooting/) if result does not look like shown below 
+```shell
+$ sudo /usr/sbin/passenger-memory-stats
+```
+- **Note:** You should see both Nginx processing & Passenger processes. Please refer to the passenger [troubleshooting guide](https://www.phusionpassenger.com/library/admin/nginx/troubleshooting/) if result does not look like shown below 
 
 
 - Check for updates of newly installed Passenger and Nginx packages 
-  - $ sudo apt-get update
-  - $ sudo apt-get upgrade
-
+```shell
+$ sudo apt-get update
+$ sudo apt-get upgrade
+```
 Congratulations! Your server is now ready to deploy Rails application.
 
 ## Create a new user for your app
 
 - Replace “Ubuntu” adminuser with new user with admin privileges 
 - Run below command to create a new user
-  - $ sudo adduser username
+```shell
+$ sudo adduser username
+```
 - Make SSH key of ubuntu adminuser accessible to username
-  - $ sudo mkdir -p ~username/.ssh
-  - $ touch $HOME/.ssh/authorized_keys
-  - $ sudo sh -c "cat $HOME/.ssh/authorized_keys >> ~username/.ssh/authorized_keys"
-  - $ sudo chown -R username: ~username/.ssh
-  - $ sudo chmod 700 ~username/.ssh
-  - $ sudo sh -c "chmod 600 ~username/.ssh/*"
-  
+```shell
+$ sudo mkdir -p ~username/.ssh
+$ touch $HOME/.ssh/authorized_keys
+$ sudo sh -c "cat $HOME/.ssh/authorized_keys >> ~username/.ssh/authorized_keys"
+$ sudo chown -R username: ~username/.ssh
+$ sudo chmod 700 ~username/.ssh
+$ sudo sh -c "chmod 600 ~username/.ssh/*"
+```
 ## Install and Setup Git
 
 - Run below command to install 
-  - $ sudo apt-get install git
+```shell
+$ sudo apt-get install git
+```
 - Setup git
-  - $ git config --global user.name "Your Name"
-  - $ git config --global user.email "youremail@domain.com"
+```shell
+$ git config --global user.name "Your Name"
+$ git config --global user.email "youremail@domain.com"
+```
 - Verify configurations
-  - $ git config --list
+```shell
+$ git config --list
+```
 - Generate SSH key to access your GitHub account from the server 
-  - Refer - https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
+  - [Click here](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)
 - Add SSH key to your GitHub account
-  - Refer - https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
+  - [Click here](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
 - Make SSH key accessible to username created as per above
-  - $ sudo sh -c "cat $HOME/.ssh/id_rsa >> ~username/.ssh/id_rsa"
-  - $ sudo sh -c "cat $HOME/.ssh/id_rsa.pub >> ~username/.ssh/id_rsa.pub”
+```shell
+$ sudo sh -c "cat $HOME/.ssh/id_rsa >> ~username/.ssh/id_rsa"
+$ sudo sh -c "cat $HOME/.ssh/id_rsa.pub >> ~username/.ssh/id_rsa.pub”
+```
 - Test SSH connection with GitHub
-  - Refer - https://help.github.com/articles/testing-your-ssh-connection/
+  - [Click here](https://help.github.com/articles/testing-your-ssh-connection/)
   
 ## Setup code
 
 - Prepare directory structure 
-  - $ sudo mkdir -p /var/www/yourappname
-  - $ sudo chown username: /var/www/yourappname (make it accessible to username created as per above)
+```shell
+$ sudo mkdir -p /var/www/yourappname
+$ sudo chown username: /var/www/yourappname (make it accessible to username created as per above)
+```
 - Go to directory
-  - $ cd /var/www/yourappname
+```shell
+$ cd /var/www/yourappname
+```
 - Clone code of your rails app. Alternatively you can use my sample app (https://github.com/rutisyrz/passenger_nginx_rails_sample_app)
-  - $ git clone git://github.com/username/yourappname.git code
-- Note: Run command “sudo chmod 777 /var/www/yourappname/” incase you get “fatal: could not create work tree dir 'code'.: Permission denied” error while cloning repository.
+```shell
+$ git clone git://github.com/username/yourappname.git code
+```
+- **Note:** Run command “*sudo chmod 777 /var/www/yourappname/*” incase you get “*fatal: could not create work tree dir 'code'.: Permission denied*” error while cloning repository.
 
 ## Setup environment
 
 - Login as a new user - username
-  - $ sudo -u username -H bash -l
+```shell
+$ sudo -u username -H bash -l
+```
 - Set ruby version in RVM 
-  - $ rvm use ruby  2.1.2
+```shell
+$ rvm use ruby  2.1.2
+```
 - Install MySQL client package
-  - $ sudo apt-get install mysql-client libmysqlclient-dev
+```shell
+$ sudo apt-get install mysql-client libmysqlclient-dev
+```
 - Go to app root directory
-  - $ cd /var/www/yourappname/code
+```shell
+$ cd /var/www/yourappname/code
+```
 - Install bundle
-  - $ bundle install --deployment --without development test
-
-  - ERROR: There was an error while trying to write to `/var/www/yourappname/code/.bundle/config`. It is likely that you need to grant write permissions for that path. Run command -
-    - $ sudo chmod -R 777 /var/www/cloud_monitor_agent/code/.bundle/
-  - ERROR: While executing gem ... (Gem::FilePermissionError)  Run command -
-    - $ sudo chmod -R 777 /usr/local/rvm/gems/ruby-2.1.2
+```shell
+$ bundle install --deployment --without development test
+```
+  - **ERROR:** There was an error while trying to write to `*/var/www/yourappname/code/.bundle/config*`. It is likely that you need to grant write permissions for that path. Run command -
+```shell
+$ sudo chmod -R 777 /var/www/cloud_monitor_agent/code/.bundle/
+```
+  - **ERROR:** While executing gem ... (Gem::FilePermissionError)  Run command -
+```shell
+$ sudo chmod -R 777 /usr/local/rvm/gems/ruby-2.1.2
+```
 - Assuming you have updated your database.yml with valid config details. If not, please update the same
 - Generate and update unique secret key for Staging environment. 
   - Run command
-    - $ bundle exec rake secret
-  - Update config/secrets.yml file with value generated by above command 
-    - $ sudo vi config/secrets.yml
+```shell
+$ bundle exec rake secret
+```
+  - Update *config/secrets.yml* file with value generated by above command 
+```shell
+$ sudo vi config/secrets.yml
+```
+```ruby
       staging:
         secret_key_base: <%=ENV["SECRET_KEY_BASE"]%>
+```        
 - Create a log file for Staging environment with “0666” permission
-  - $ sudo touch log/staging.log
-  - $ sudo chmod 0666 log/staging.log 
+```shell
+$ sudo touch log/staging.log
+$ sudo chmod 0666 log/staging.log 
+```
 - Setup database 
-  - $ bundle exec rake db:setup RAILS_ENV=staging
-  - $ bundle exec rake db:migrate RAILS_ENV=staging
+```ruby
+$ bundle exec rake db:setup RAILS_ENV=staging
+$ bundle exec rake db:migrate RAILS_ENV=staging
+```
 - Compile assets 
-  - $ bundle exec rake assets:precompile RAILS_ENV=staging
-
+```ruby
+$ bundle exec rake assets:precompile RAILS_ENV=staging
+```
 ## Configure Nginx and Passenger
 
 - Run command 
